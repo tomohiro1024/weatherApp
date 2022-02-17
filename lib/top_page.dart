@@ -66,14 +66,14 @@ class _TopPageState extends State<TopPage> {
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(hintText: '郵便番号を入力して下さい'),
                     )),
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 Text(
                   'さいたま市',
                   style: TextStyle(fontSize: 50),
                 ),
                 Text(
                   '${currentWeather.temp}°',
-                  style: TextStyle(fontSize: 70),
+                  style: TextStyle(fontSize: 50),
                 ),
                 Text(currentWeather.description),
                 Row(
@@ -86,7 +86,7 @@ class _TopPageState extends State<TopPage> {
                     Text('最低気温: ${currentWeather.tempMin}°'),
                   ],
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
                 // 時間毎のUI
                 Divider(height: 0),
                 SingleChildScrollView(
