@@ -13,9 +13,22 @@ class Weather {
   DateTime time;
   int rainyPercent;
   int humidity;
+  int hpa;
+  int wind;
 
-  Weather(this.temp, this.tempMax, this.tempMin, this.description, this.lon,
-      this.lat, this.icon, this.time, this.rainyPercent, this.humidity);
+  Weather(
+      this.temp,
+      this.tempMax,
+      this.tempMin,
+      this.description,
+      this.lon,
+      this.lat,
+      this.icon,
+      this.time,
+      this.rainyPercent,
+      this.humidity,
+      this.hpa,
+      this.wind);
 
   // 現在の天気情報を取得するクラス
   static Future<Weather?> getCurrentWeather(String zipCode) async {
@@ -37,16 +50,20 @@ class Weather {
       print(date);
 
       Weather currentWeather = Weather(
-          date['main']['temp'].toInt(),
-          date['main']['temp_max'].toInt(),
-          date['main']['temp_min'].toInt(),
-          date['weather'][0]['description'],
-          date['coord']['lon'],
-          date['coord']['lat'],
-          '晴れ',
-          DateTime(2020, 10, 2, 12),
-          10,
-          date['main']['humidity']);
+        date['main']['temp'].toInt(),
+        date['main']['temp_max'].toInt(),
+        date['main']['temp_min'].toInt(),
+        date['weather'][0]['description'],
+        date['coord']['lon'],
+        date['coord']['lat'],
+        '晴れ',
+        DateTime(2020, 10, 2, 12),
+        10,
+        date['main']['humidity'],
+        date['main']['pressure'],
+        date['wind']['speed'].toInt(),
+      );
+      print(currentWeather.wind);
       return currentWeather;
     } catch (e) {
       print(e);
