@@ -51,6 +51,7 @@ class _TopPageState extends State<TopPage> {
                           Map<String, String> response = {};
                           response =
                               (await ZipCode.searchAddressFromZipCode(value))!;
+                          await Weather.getCurrentWeather(value);
                           // responseの'message'というキーに値が入ってきた(エラーが出た)場合に入ってくる変数
                           errorMessage = response['message'];
                           if (errorMessage != null) {

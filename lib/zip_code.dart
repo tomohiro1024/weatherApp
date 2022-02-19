@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 class ZipCode {
   static Future<Map<String, String>?> searchAddressFromZipCode(
       String zipCode) async {
+    // 郵便番号APIで郵便番号を取得するURL
     String url = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=$zipCode';
 
     try {
