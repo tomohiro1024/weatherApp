@@ -18,37 +18,15 @@ class _TopPageState extends State<TopPage> {
 
   String? errorMessage;
 
+  Image? image;
+
   // 1時間ごとの天気情報
-  List<Weather> hourlyWeather = [
-    Weather(10, 15, 5, '晴れ', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 10), 50, 10,
-        1, 1),
-    Weather(11, 15, 5, '曇り', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 11), 60, 10,
-        1, 1),
-    Weather(12, 15, 5, '雨', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 12), 70, 10,
-        1, 1),
-    Weather(13, 15, 5, '台風', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 13), 80, 10,
-        1, 1),
-    Weather(10, 15, 5, '晴れ', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 10), 50, 10,
-        1, 1),
-    Weather(11, 15, 5, '曇り', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 11), 60, 10,
-        1, 1),
-    Weather(12, 15, 5, '雨', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 12), 70, 10,
-        1, 1),
-    Weather(13, 15, 5, '台風', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 13), 80, 10,
-        1, 1),
-    Weather(10, 15, 5, '晴れ', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 10), 50, 10,
-        1, 1),
-    Weather(11, 15, 5, '曇り', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 11), 60, 10,
-        1, 1),
-    Weather(12, 15, 5, '雨', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 12), 70, 10,
-        1, 1),
-    Weather(13, 15, 5, '台風', 5.5, 5.5, '晴れ', DateTime(2022, 1, 30, 13), 80, 10,
-        1, 1),
-  ];
+  List<Weather>? hourlyWeather;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -78,6 +56,17 @@ class _TopPageState extends State<TopPage> {
                             address = response['address'];
                             currentWeather =
                                 (await Weather.getCurrentWeather(value))!;
+                            if (currentWeather!.temp < 15) {
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.blueAccent,
+                                content: Text('今日も寒いので気を付けましょう'),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+
+                            hourlyWeather = await Weather.getForecast(
+                                currentWeather!.lon, currentWeather!.lat);
                           }
                           print(response);
                           setState(() {});
@@ -100,7 +89,16 @@ class _TopPageState extends State<TopPage> {
                     '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
                     style: TextStyle(fontSize: 60),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
+
+                  Image.network(
+                    'https://openweathermap.org/img/wn/${hourlyWeather![0].icon}.png',
+                    errorBuilder: (BuildContext? context, Object? exception,
+                        StackTrace? stackTrace) {
+                      return Text('Your error widget...');
+                    },
+                    width: 50,
+                  ),
                   Text(currentWeather == null
                       ? 'ー'
                       : currentWeather!.description),
@@ -140,30 +138,33 @@ class _TopPageState extends State<TopPage> {
                   Divider(height: 0),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: hourlyWeather.map((weather) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 9, vertical: 8),
-                          child: Column(
-                            children: [
-                              Text('${DateFormat('H').format(weather.time)}時'),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Icon(Icons.light_mode),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Text(
-                                  '${weather.temp}°',
-                                  style: TextStyle(fontSize: 19),
+                    child: hourlyWeather == null
+                        ? Container()
+                        : Row(
+                            children: hourlyWeather!.map((weather) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 9, vertical: 8),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        '${DateFormat('H').format(weather.time)}時'),
+                                    Image.network(
+                                      'https://openweathermap.org/img/wn/${weather.icon}.png',
+                                      width: 40,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Text(
+                                        '${weather.temp}°',
+                                        style: TextStyle(fontSize: 19),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              );
+                            }).toList(),
                           ),
-                        );
-                      }).toList(),
-                    ),
                   ),
                   Divider(height: 0),
                   // 日毎のUI

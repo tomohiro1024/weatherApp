@@ -70,4 +70,40 @@ class Weather {
       return null;
     }
   }
+
+  static Future<List<Weather>?> getForecast(double lon, double lat) async {
+    Map<String, List<Weather>> response = {};
+    String url =
+        'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=minutely&appid=20dabda8e9b77ce7502ea5882318bea2&lang=ja&units=metric';
+    try {
+      // urlの取得
+      var result = await get(Uri.parse(url));
+      Map<String, dynamic> date = jsonDecode(result.body);
+      List<dynamic> hourlyWeatherDate = date['hourly'];
+      print(hourlyWeatherDate);
+      // hourlyWeatherDateに入っている1時間ごとのデータをList<Weather>に格納
+      List<Weather> hourlyWeather = hourlyWeatherDate.map((weather) {
+        return Weather(
+            weather['temp'].toInt(),
+            10,
+            5,
+            'sunny',
+            1.0,
+            1.0,
+            weather['weather'][0]['icon'],
+            DateTime.fromMillisecondsSinceEpoch(weather['dt'] * 1000),
+            1,
+            1,
+            1,
+            1);
+      }).toList();
+      print(hourlyWeather[1].time);
+      print(hourlyWeather[1].temp);
+      print(hourlyWeather[1].icon);
+      return hourlyWeather;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 }
