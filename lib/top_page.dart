@@ -167,47 +167,6 @@ class _TopPageState extends State<TopPage> {
                           ),
                   ),
                   Divider(height: 0),
-                  // 日毎のUI
-                  // Expanded(
-                  //   child: SingleChildScrollView(
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 9.0),
-                  //       child: Column(
-                  //         children: dailyWeather.map((weather) {
-                  //           return Container(
-                  //             height: 50,
-                  //             child: Row(
-                  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //               children: [
-                  //                 Container(
-                  //                     width: 50,
-                  //                     child: Text(
-                  //                         '${weekDay[weather.time.weekday - 1]}曜日')),
-                  //                 Icon(Icons.light_mode),
-                  //                 Container(
-                  //                   width: 50,
-                  //                   child: Row(
-                  //                     mainAxisAlignment:
-                  //                         MainAxisAlignment.spaceBetween,
-                  //                     children: [
-                  //                       Text('${weather.tempMax}°',
-                  //                           style: TextStyle(fontSize: 17)),
-                  //                       Text('${weather.tempMin}°',
-                  //                           style: TextStyle(
-                  //                               fontSize: 17,
-                  //                               color:
-                  //                                   Colors.black.withOpacity(0.5))),
-                  //                     ],
-                  //                   ),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           );
-                  //         }).toList(),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // )
                 ],
               ),
             ],
