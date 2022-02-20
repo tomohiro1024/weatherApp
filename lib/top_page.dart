@@ -91,14 +91,16 @@ class _TopPageState extends State<TopPage> {
                   ),
                   SizedBox(height: 10),
 
-                  Image.network(
-                    'https://openweathermap.org/img/wn/${hourlyWeather![0].icon}.png',
-                    errorBuilder: (BuildContext? context, Object? exception,
-                        StackTrace? stackTrace) {
-                      return Text('Your error widget...');
-                    },
-                    width: 50,
-                  ),
+                  hourlyWeather == null
+                      ? Container()
+                      : Image.network(
+                          'https://openweathermap.org/img/wn/${hourlyWeather![0].icon}.png',
+                          errorBuilder: (BuildContext? context,
+                              Object? exception, StackTrace? stackTrace) {
+                            return Text('Your error widget...');
+                          },
+                          width: 50,
+                        ),
                   Text(currentWeather == null
                       ? 'ー'
                       : currentWeather!.description),
