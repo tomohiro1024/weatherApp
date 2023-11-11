@@ -13,11 +13,8 @@ class TopPage extends StatefulWidget {
 class _TopPageState extends State<TopPage> {
   // 現在の天気情報
   Weather? currentWeather;
-
   String? address = 'ー';
-
   String? errorMessage;
-
   Image? image;
 
   // 1時間ごとの天気情報
