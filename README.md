@@ -1,16 +1,13 @@
-# weather_app
+メモ
 
-A new Flutter project.
+・initStateを用意して、ダイアローグを用意する。
+・prefsを使い、前回の郵便番号を表示する。
+・UIを整える
+・郵便番号検索時のメッセージを増やす
+・↑のメッセージをテキスト表示させる。
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+後々実現したいこと。
+・現在の居場所を取得させる。(初期表示時)
+・郵便番号の検索履歴を表示する(DB)
