@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weather_app/weather.dart';
 import 'package:weather_app/zip_code.dart';
 
@@ -20,6 +21,14 @@ class _TopPageState extends State<TopPage> {
   // 1時間ごとの天気情報
   List<Weather>? hourlyWeather;
 
+  String? getAnimation(test) {
+    if (test == '04d') {
+      return 'assets/cloud.json';
+    } else {
+      return 'assets/sunny.json';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +39,7 @@ class _TopPageState extends State<TopPage> {
             children: [
               Column(
                 children: [
-                  Container(
+                  SizedBox(
                       width: 220,
                       child: TextField(
                         onSubmitted: (value) async {
@@ -69,24 +78,25 @@ class _TopPageState extends State<TopPage> {
                           setState(() {});
                         },
                         textAlign: TextAlign.center,
-                        decoration: InputDecoration(hintText: '郵便番号を入力して下さい'),
+                        decoration:
+                            const InputDecoration(hintText: '郵便番号を入力して下さい'),
                       )),
                   // errorMessageに値が入っていない(エラーじゃない)場合何も表示しない
                   // Text(
                   //   errorMessage == null ? '' : errorMessage!,
                   //   style: TextStyle(color: Colors.red),
                   // ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Text(
                     address!,
-                    style: TextStyle(fontSize: 30),
+                    style: const TextStyle(fontSize: 30),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
-                    style: TextStyle(fontSize: 60),
+                    style: const TextStyle(fontSize: 60),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
                   hourlyWeather == null
                       ? Container()
@@ -94,14 +104,21 @@ class _TopPageState extends State<TopPage> {
                           'https://openweathermap.org/img/wn/${hourlyWeather![0].icon}.png',
                           errorBuilder: (BuildContext? context,
                               Object? exception, StackTrace? stackTrace) {
-                            return Text('Your error widget...');
+                            return const Text('Your error widget...');
                           },
                           width: 50,
+                        ),
+                  currentWeather == null
+                      ? Container()
+                      : SizedBox(
+                          height: 50,
+                          child: Lottie.asset(
+                              '${getAnimation(hourlyWeather![0].icon)}'),
                         ),
                   Text(currentWeather == null
                       ? 'ー'
                       : currentWeather!.description),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -114,7 +131,7 @@ class _TopPageState extends State<TopPage> {
                           '最低気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMin}°'),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -132,15 +149,19 @@ class _TopPageState extends State<TopPage> {
                           '風速: ${currentWeather == null ? 'ー' : currentWeather!.wind} kt'),
                     ],
                   ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   // 時間毎のUI
-                  Divider(height: 0),
+                  const Divider(height: 0),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: hourlyWeather == null
                         ? Container()
                         : Row(
                             children: hourlyWeather!.map((weather) {
+                              print(weather);
+                              // if(weather.icon == '04d') {
+                              //   weather.icon
+                              // }
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 9, vertical: 8),
@@ -156,7 +177,7 @@ class _TopPageState extends State<TopPage> {
                                       padding: const EdgeInsets.only(top: 8.0),
                                       child: Text(
                                         '${weather.temp}°',
-                                        style: TextStyle(fontSize: 19),
+                                        style: const TextStyle(fontSize: 19),
                                       ),
                                     ),
                                   ],
@@ -165,7 +186,7 @@ class _TopPageState extends State<TopPage> {
                             }).toList(),
                           ),
                   ),
-                  Divider(height: 0),
+                  const Divider(height: 0),
                 ],
               ),
             ],
