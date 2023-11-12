@@ -63,7 +63,7 @@ class _TopPageState extends State<TopPage> {
                             currentWeather =
                                 (await Weather.getCurrentWeather(value))!;
                             if (currentWeather!.temp < 15) {
-                              final snackBar = SnackBar(
+                              const snackBar = SnackBar(
                                 backgroundColor: Colors.blueAccent,
                                 content: Text('今日も寒いので気を付けましょう'),
                               );
@@ -81,11 +81,6 @@ class _TopPageState extends State<TopPage> {
                         decoration:
                             const InputDecoration(hintText: '郵便番号を入力して下さい'),
                       )),
-                  // errorMessageに値が入っていない(エラーじゃない)場合何も表示しない
-                  // Text(
-                  //   errorMessage == null ? '' : errorMessage!,
-                  //   style: TextStyle(color: Colors.red),
-                  // ),
                   const SizedBox(height: 50),
                   Text(
                     address!,
