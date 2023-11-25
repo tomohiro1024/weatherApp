@@ -32,7 +32,7 @@ class _TopPageState extends State<TopPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      // backgroundColor: Colors.grey,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -155,7 +155,9 @@ class _TopPageState extends State<TopPage> {
                   ),
                   const SizedBox(height: 50),
                   // 時間毎のUI
-                  const Divider(height: 0),
+                  const Divider(
+                    thickness: 1,
+                  ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: hourlyWeather == null
@@ -163,9 +165,6 @@ class _TopPageState extends State<TopPage> {
                         : Row(
                             children: hourlyWeather!.map((weather) {
                               print(weather);
-                              // if(weather.icon == '04d') {
-                              //   weather.icon
-                              // }
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 9, vertical: 8),
@@ -190,7 +189,9 @@ class _TopPageState extends State<TopPage> {
                             }).toList(),
                           ),
                   ),
-                  const Divider(height: 0),
+                  const Divider(
+                    thickness: 1,
+                  ),
                 ],
               ),
             ],
