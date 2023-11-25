@@ -71,14 +71,14 @@ class _TopPageState extends State<TopPage> {
                                   .showSnackBar(snackBar);
                             }
 
-                            if (currentWeather!.temp < 20) {
-                              const snackBar = SnackBar(
-                                backgroundColor: Colors.blueAccent,
-                                content: Text('今日ha気を付けましょう'),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
+                            // if (currentWeather!.temp < 20) {
+                            //   const snackBar = SnackBar(
+                            //     backgroundColor: Colors.blueAccent,
+                            //     content: Text('今日ha気を付けましょう'),
+                            //   );
+                            //   ScaffoldMessenger.of(context)
+                            //       .showSnackBar(snackBar);
+                            // }
 
                             hourlyWeather = await Weather.getForecast(
                                 currentWeather!.lon, currentWeather!.lat);
