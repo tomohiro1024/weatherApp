@@ -22,17 +22,23 @@ class _TopPageState extends State<TopPage> {
   List<Weather>? hourlyWeather;
 
   String? getAnimation(icon) {
-    if (icon == '01d') {
+    if (icon == '01d' || icon == '01n') {
       return 'assets/sunny.json';
-    } else if (icon == '02d') {
+    } else if (icon == '02d' || icon == '02n') {
       return 'assets/fewClouds.json';
-    } else if (icon == '03d' || icon == '04d') {
+    } else if (icon == '03d' ||
+        icon == '04d' ||
+        icon == '03n' ||
+        icon == '04n') {
       return 'assets/clouds.json';
-    } else if (icon == '09d' || icon == '10d') {
+    } else if (icon == '09d' ||
+        icon == '10d' ||
+        icon == '09n' ||
+        icon == '10n') {
       return 'assets/rain.json';
-    } else if (icon == '11d') {
+    } else if (icon == '11d' || icon == '11n') {
       return 'assets/thunder.json';
-    } else if (icon == '13d') {
+    } else if (icon == '13d' || icon == '13n') {
       return 'assets/snow.json';
     }
     return 'assets/sunny.json';
@@ -91,6 +97,8 @@ class _TopPageState extends State<TopPage> {
 
                             hourlyWeather = await Weather.getForecast(
                                 currentWeather!.lon, currentWeather!.lat);
+                            print('fwqfwfeaffewfa');
+                            print(hourlyWeather![0].icon);
                           }
                           print(response);
                           setState(() {});
@@ -173,7 +181,7 @@ class _TopPageState extends State<TopPage> {
                         ? Container()
                         : Row(
                             children: hourlyWeather!.map((weather) {
-                              print(weather);
+                              print(weather.icon);
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 9, vertical: 8),
