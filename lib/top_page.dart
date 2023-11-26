@@ -21,12 +21,21 @@ class _TopPageState extends State<TopPage> {
   // 1時間ごとの天気情報
   List<Weather>? hourlyWeather;
 
-  String? getAnimation(test) {
-    if (test == '04d') {
-      return 'assets/cloud.json';
-    } else {
+  String? getAnimation(icon) {
+    if (icon == '01d') {
       return 'assets/sunny.json';
+    } else if (icon == '02d') {
+      return 'assets/fewClouds.json';
+    } else if (icon == '03d' || icon == '04d') {
+      return 'assets/clouds.json';
+    } else if (icon == '09d' || icon == '10d') {
+      return 'assets/rain.json';
+    } else if (icon == '11d') {
+      return 'assets/thunder.json';
+    } else if (icon == '13d') {
+      return 'assets/snow.json';
     }
+    return 'assets/sunny.json';
   }
 
   @override
@@ -102,16 +111,16 @@ class _TopPageState extends State<TopPage> {
                   ),
                   const SizedBox(height: 10),
 
-                  hourlyWeather == null
-                      ? Container()
-                      : Image.network(
-                          'https://openweathermap.org/img/wn/${hourlyWeather![0].icon}.png',
-                          errorBuilder: (BuildContext? context,
-                              Object? exception, StackTrace? stackTrace) {
-                            return const Text('Your error widget...');
-                          },
-                          width: 50,
-                        ),
+                  // hourlyWeather == null
+                  //     ? Container()
+                  //     : Image.network(
+                  //         'https://openweathermap.org/img/wn/${hourlyWeather![0].icon}.png',
+                  //         errorBuilder: (BuildContext? context,
+                  //             Object? exception, StackTrace? stackTrace) {
+                  //           return const Text('Your error widget...');
+                  //         },
+                  //         width: 50,
+                  //       ),
                   currentWeather == null
                       ? Container()
                       : SizedBox(
