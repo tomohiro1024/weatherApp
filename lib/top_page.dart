@@ -44,10 +44,11 @@ class _TopPageState extends State<TopPage> {
     return 'assets/sunny.json';
   }
 
+  final _textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -58,44 +59,77 @@ class _TopPageState extends State<TopPage> {
                   SizedBox(
                     width: 220,
                     child: TextField(
-                      onSubmitted: (value) async {
-                        Map<String, String> response = {};
-                        response =
-                            (await ZipCode.searchAddressFromZipCode(value))!;
-
-                        errorMessage = response['message'];
-                        if (errorMessage != null) {
-                          final snackBar = SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text(errorMessage!),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
-                        if (response.containsKey('address')) {
-                          address = response['address'];
-                          currentWeather =
-                              (await Weather.getCurrentWeather(value))!;
-                          if (currentWeather!.temp < 15) {
-                            const snackBar = SnackBar(
-                              backgroundColor: Colors.blueAccent,
-                              content: Text('今日も寒いので気を付けましょう'),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          }
-
-                          hourlyWeather = await Weather.getForecast(
-                              currentWeather!.lon, currentWeather!.lat);
-                        }
-                        setState(() {});
-                      },
+                      controller: _textEditingController,
+                      // onSubmitted: (value) async {
+                      //   Map<String, String> response = {};
+                      //   response =
+                      //       (await ZipCode.searchAddressFromZipCode(value))!;
+                      //
+                      //   errorMessage = response['message'];
+                      //   if (errorMessage != null) {
+                      //     final snackBar = SnackBar(
+                      //       backgroundColor: Colors.red,
+                      //       content: Text(errorMessage!),
+                      //     );
+                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      //   }
+                      //   if (response.containsKey('address')) {
+                      //     address = response['address'];
+                      //     currentWeather =
+                      //         (await Weather.getCurrentWeather(value))!;
+                      //     if (currentWeather!.temp < 15) {
+                      //       const snackBar = SnackBar(
+                      //         backgroundColor: Colors.blueAccent,
+                      //         content: Text('今日も寒いので気を付けましょう'),
+                      //       );
+                      //       ScaffoldMessenger.of(context)
+                      //           .showSnackBar(snackBar);
+                      //     }
+                      //
+                      //     hourlyWeather = await Weather.getForecast(
+                      //         currentWeather!.lon, currentWeather!.lat);
+                      //   }
+                      //   setState(() {});
+                      // },
                       textAlign: TextAlign.center,
                       decoration:
                           const InputDecoration(hintText: '郵便番号を入力して下さい'),
                     ),
                   ),
-                  SizedBox(width: 10),
-                  ElevatedButton(onPressed: () {}, child: Text('send'))
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Map<String, String> response = {};
+                      response = (await ZipCode.searchAddressFromZipCode(
+                          _textEditingController.text))!;
+
+                      errorMessage = response['message'];
+                      if (errorMessage != null) {
+                        final snackBar = SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(errorMessage!),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                      if (response.containsKey('address')) {
+                        address = response['address'];
+                        currentWeather = (await Weather.getCurrentWeather(
+                            _textEditingController.text))!;
+                        if (currentWeather!.temp < 15) {
+                          const snackBar = SnackBar(
+                            backgroundColor: Colors.blueAccent,
+                            content: Text('今日も寒いので気を付けましょう'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+
+                        hourlyWeather = await Weather.getForecast(
+                            currentWeather!.lon, currentWeather!.lat);
+                      }
+                      setState(() {});
+                    },
+                    child: const Text('送信'),
+                  ),
                 ],
               ),
               const SizedBox(height: 50),
