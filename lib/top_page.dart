@@ -12,14 +12,13 @@ class TopPage extends StatefulWidget {
 }
 
 class _TopPageState extends State<TopPage> {
-  // 現在の天気情報
   Weather? currentWeather;
   String? address = 'ー';
   String? errorMessage;
   Image? image;
-
-  // 1時間ごとの天気情報
   List<Weather>? hourlyWeather;
+  bool isButtonEnabled = false;
+  final _textEditingController = TextEditingController();
 
   String? getAnimation(icon) {
     if (icon == '01d' || icon == '01n') {
@@ -44,8 +43,6 @@ class _TopPageState extends State<TopPage> {
     return 'assets/sunny.json';
   }
 
-  final _textEditingController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,37 +57,6 @@ class _TopPageState extends State<TopPage> {
                     width: 220,
                     child: TextField(
                       controller: _textEditingController,
-                      // onSubmitted: (value) async {
-                      //   Map<String, String> response = {};
-                      //   response =
-                      //       (await ZipCode.searchAddressFromZipCode(value))!;
-                      //
-                      //   errorMessage = response['message'];
-                      //   if (errorMessage != null) {
-                      //     final snackBar = SnackBar(
-                      //       backgroundColor: Colors.red,
-                      //       content: Text(errorMessage!),
-                      //     );
-                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      //   }
-                      //   if (response.containsKey('address')) {
-                      //     address = response['address'];
-                      //     currentWeather =
-                      //         (await Weather.getCurrentWeather(value))!;
-                      //     if (currentWeather!.temp < 15) {
-                      //       const snackBar = SnackBar(
-                      //         backgroundColor: Colors.blueAccent,
-                      //         content: Text('今日も寒いので気を付けましょう'),
-                      //       );
-                      //       ScaffoldMessenger.of(context)
-                      //           .showSnackBar(snackBar);
-                      //     }
-                      //
-                      //     hourlyWeather = await Weather.getForecast(
-                      //         currentWeather!.lon, currentWeather!.lat);
-                      //   }
-                      //   setState(() {});
-                      // },
                       textAlign: TextAlign.center,
                       decoration:
                           const InputDecoration(hintText: '郵便番号を入力して下さい'),
@@ -98,36 +64,49 @@ class _TopPageState extends State<TopPage> {
                   ),
                   const SizedBox(width: 10),
                   ElevatedButton(
-                    onPressed: () async {
-                      Map<String, String> response = {};
-                      response = (await ZipCode.searchAddressFromZipCode(
-                          _textEditingController.text))!;
+                    onPressed: isButtonEnabled
+                        ? null
+                        : () async {
+                            setState(() {
+                              isButtonEnabled = true;
+                            });
+                            await Future.delayed(const Duration(seconds: 5),
+                                () {
+                              setState(() {
+                                isButtonEnabled = false;
+                              });
+                            });
+                            Map<String, String> response = {};
+                            response = (await ZipCode.searchAddressFromZipCode(
+                                _textEditingController.text))!;
 
-                      errorMessage = response['message'];
-                      if (errorMessage != null) {
-                        final snackBar = SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text(errorMessage!),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                      if (response.containsKey('address')) {
-                        address = response['address'];
-                        currentWeather = (await Weather.getCurrentWeather(
-                            _textEditingController.text))!;
-                        if (currentWeather!.temp < 15) {
-                          const snackBar = SnackBar(
-                            backgroundColor: Colors.blueAccent,
-                            content: Text('今日も寒いので気を付けましょう'),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
+                            errorMessage = response['message'];
+                            if (errorMessage != null) {
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(errorMessage!),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                            if (response.containsKey('address')) {
+                              address = response['address'];
+                              currentWeather = (await Weather.getCurrentWeather(
+                                  _textEditingController.text))!;
+                              if (currentWeather!.temp < 15) {
+                                const snackBar = SnackBar(
+                                  backgroundColor: Colors.blueAccent,
+                                  content: Text('今日も寒いので気を付けましょう'),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
 
-                        hourlyWeather = await Weather.getForecast(
-                            currentWeather!.lon, currentWeather!.lat);
-                      }
-                      setState(() {});
-                    },
+                              hourlyWeather = await Weather.getForecast(
+                                  currentWeather!.lon, currentWeather!.lat);
+                            }
+                            setState(() {});
+                          },
                     child: const Text('送信'),
                   ),
                 ],
