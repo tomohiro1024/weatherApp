@@ -50,6 +50,7 @@ class _TopPageState extends State<TopPage> {
         child: SafeArea(
           child: Column(
             children: [
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -69,12 +70,6 @@ class _TopPageState extends State<TopPage> {
                         : () async {
                             setState(() {
                               isButtonEnabled = true;
-                            });
-                            await Future.delayed(const Duration(seconds: 2),
-                                () {
-                              setState(() {
-                                isButtonEnabled = false;
-                              });
                             });
                             Map<String, String> response = {};
                             response = (await ZipCode.searchAddressFromZipCode(
@@ -109,9 +104,15 @@ class _TopPageState extends State<TopPage> {
                               hourlyWeather = await Weather.getForecast(
                                   currentWeather!.lon, currentWeather!.lat);
                             }
+                            await Future.delayed(const Duration(seconds: 2),
+                                () {
+                              setState(() {
+                                isButtonEnabled = false;
+                              });
+                            });
                             setState(() {});
                           },
-                    child: const Text('送信'),
+                    child: const Text('天気取得'),
                   ),
                 ],
               ),
@@ -144,7 +145,7 @@ class _TopPageState extends State<TopPage> {
                       child: Lottie.asset(
                           '${getAnimation(hourlyWeather![0].icon)}'),
                     ),
-              Text(currentWeather == null ? 'ー' : currentWeather!.description),
+              // Text(currentWeather == null ? 'ー' : currentWeather!.description),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
