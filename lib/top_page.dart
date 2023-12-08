@@ -47,19 +47,27 @@ class _TopPageState extends State<TopPage> {
   Widget test() {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            Container(
-              height: size.height * 0.75,
-              width: size.width,
-              margin: EdgeInsets.only(right: 12, left: 12),
-              decoration: BoxDecoration(
-                  color: Colors.orangeAccent,
-                  borderRadius: BorderRadius.circular(20)),
+      body: Column(
+        children: [
+          Container(
+            height: size.height,
+            width: size.width,
+            // margin: const EdgeInsets.only(right: 1, left: 1),
+            decoration: const BoxDecoration(
+              color: Colors.orangeAccent,
+              // borderRadius: BorderRadius.circular(20),
+              gradient: LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                colors: <Color>[
+                  Colors.cyanAccent,
+                  Colors.cyan,
+                  Colors.blueAccent,
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -87,7 +95,7 @@ class _TopPageState extends State<TopPage> {
                           hintText: '郵便番号の入力',
                           prefixIcon: Icon(
                             Icons.place,
-                            color: Colors.blue,
+                            color: Colors.redAccent,
                           ),
                         ),
                         inputFormatters: [
