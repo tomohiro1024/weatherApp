@@ -88,6 +88,7 @@ class _TopPageState extends State<TopPage> {
                     SizedBox(
                       width: 210,
                       child: TextField(
+                        cursorColor: Colors.yellow,
                         keyboardType: TextInputType.number,
                         controller: _textEditingController,
                         textAlign: TextAlign.center,
@@ -95,7 +96,7 @@ class _TopPageState extends State<TopPage> {
                           hintText: '郵便番号の入力',
                           prefixIcon: Icon(
                             Icons.place,
-                            color: Colors.redAccent,
+                            color: Colors.yellow,
                           ),
                         ),
                         inputFormatters: [
@@ -117,10 +118,6 @@ class _TopPageState extends State<TopPage> {
                               response =
                                   (await ZipCode.searchAddressFromZipCode(
                                       _textEditingController.text))!;
-
-                              print('responseresponse');
-
-                              print(response);
 
                               errorMessage = response['message'];
                               if (errorMessage != null) {
@@ -158,13 +155,14 @@ class _TopPageState extends State<TopPage> {
                             },
                       child: const Text(
                         '天気取得',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: Colors.cyan, fontWeight: FontWeight.bold),
                       ),
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
-                        backgroundColor: Colors.white,
+                        backgroundColor: Color(0xFFeedcb3),
                         side: const BorderSide(
-                          color: Colors.blue,
+                          color: Colors.yellow,
                           width: 2,
                         ),
                       ),
@@ -243,7 +241,6 @@ class _TopPageState extends State<TopPage> {
                       ? Container()
                       : Row(
                           children: hourlyWeather!.map((weather) {
-                            print(weather.icon);
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 9, vertical: 8),
