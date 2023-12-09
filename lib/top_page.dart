@@ -19,6 +19,7 @@ class _TopPageState extends State<TopPage> {
   Image? image;
   List<Weather>? hourlyWeather;
   bool isButtonEnabled = false;
+  bool isDivider = false;
   final _textEditingController = TextEditingController();
 
   String? getAnimation(icon) {
@@ -149,6 +150,7 @@ class _TopPageState extends State<TopPage> {
                                   () {
                                 setState(() {
                                   isButtonEnabled = false;
+                                  isDivider = true;
                                 });
                               });
                               setState(() {});
@@ -169,7 +171,7 @@ class _TopPageState extends State<TopPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 70),
                 Text(
                   address!,
                   style: const TextStyle(fontSize: 30),
@@ -232,9 +234,12 @@ class _TopPageState extends State<TopPage> {
                 ),
                 const SizedBox(height: 90),
                 // 時間毎のUI
-                const Divider(
-                  thickness: 1,
-                ),
+                isDivider
+                    ? const Divider(
+                        thickness: 1,
+                        color: Colors.blue,
+                      )
+                    : Container(),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: hourlyWeather == null
@@ -265,9 +270,12 @@ class _TopPageState extends State<TopPage> {
                           }).toList(),
                         ),
                 ),
-                const Divider(
-                  thickness: 1,
-                ),
+                isDivider
+                    ? const Divider(
+                        thickness: 1,
+                        color: Colors.blue,
+                      )
+                    : Container(),
               ],
             ),
           ),
