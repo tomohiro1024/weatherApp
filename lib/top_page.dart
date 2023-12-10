@@ -14,7 +14,7 @@ class TopPage extends StatefulWidget {
 
 class _TopPageState extends State<TopPage> {
   Weather? currentWeather;
-  String? address = 'ー';
+  String? address = '';
   String? errorMessage;
   Image? image;
   List<Weather>? hourlyWeather;
@@ -45,7 +45,7 @@ class _TopPageState extends State<TopPage> {
     return 'assets/sunny.json';
   }
 
-  Widget test() {
+  Widget colorContainer() {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
@@ -77,7 +77,7 @@ class _TopPageState extends State<TopPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        test(),
+        colorContainer(),
         SingleChildScrollView(
           child: SafeArea(
             child: Column(
@@ -162,7 +162,7 @@ class _TopPageState extends State<TopPage> {
                       ),
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
-                        backgroundColor: Color(0xFFeedcb3),
+                        backgroundColor: const Color(0xFFeedcb3),
                         side: const BorderSide(
                           color: Colors.yellow,
                           width: 2,
@@ -177,10 +177,12 @@ class _TopPageState extends State<TopPage> {
                   style: const TextStyle(fontSize: 30),
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
-                  style: const TextStyle(fontSize: 60),
-                ),
+                isDivider
+                    ? Text(
+                        '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
+                        style: const TextStyle(fontSize: 60),
+                      )
+                    : Container(),
                 const SizedBox(height: 10),
 
                 // hourlyWeather == null
@@ -206,12 +208,15 @@ class _TopPageState extends State<TopPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Text(
-                          '最高気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMax}°'),
-                    ),
-                    Text(
-                        '最低気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMin}°'),
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: isDivider
+                            ? Text(
+                                '最高気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMax}°')
+                            : Container()),
+                    isDivider
+                        ? Text(
+                            '最低気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMin}°')
+                        : Container(),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -220,16 +225,22 @@ class _TopPageState extends State<TopPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0),
-                      child: Text(
-                          '湿度: ${currentWeather == null ? 'ー' : currentWeather!.humidity}°'),
+                      child: isDivider
+                          ? Text(
+                              '湿度: ${currentWeather == null ? 'ー' : currentWeather!.humidity}°')
+                          : Container(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0),
-                      child: Text(
-                          '気圧: ${currentWeather == null ? 'ー' : currentWeather!.hpa} hPa'),
+                      child: isDivider
+                          ? Text(
+                              '気圧: ${currentWeather == null ? 'ー' : currentWeather!.hpa} hPa')
+                          : Container(),
                     ),
-                    Text(
-                        '風速: ${currentWeather == null ? 'ー' : currentWeather!.wind} kt'),
+                    isDivider
+                        ? Text(
+                            '風速: ${currentWeather == null ? 'ー' : currentWeather!.wind} kt')
+                        : Container(),
                   ],
                 ),
                 const SizedBox(height: 90),
