@@ -53,10 +53,8 @@ class _TopPageState extends State<TopPage> {
           Container(
             height: size.height,
             width: size.width,
-            // margin: const EdgeInsets.only(right: 1, left: 1),
             decoration: const BoxDecoration(
               color: Colors.orangeAccent,
-              // borderRadius: BorderRadius.circular(20),
               gradient: LinearGradient(
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
@@ -202,7 +200,6 @@ class _TopPageState extends State<TopPage> {
                         child: Lottie.asset(
                             '${getAnimation(hourlyWeather![0].icon)}'),
                       ),
-                // Text(currentWeather == null ? 'ー' : currentWeather!.description),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -244,7 +241,6 @@ class _TopPageState extends State<TopPage> {
                   ],
                 ),
                 const SizedBox(height: 90),
-                // 時間毎のUI
                 isDivider
                     ? const Divider(
                         thickness: 1,
