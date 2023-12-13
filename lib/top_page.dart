@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_app/weather.dart';
@@ -19,7 +20,7 @@ class _TopPageState extends State<TopPage> {
   Image? image;
   List<Weather>? hourlyWeather;
   bool isButtonEnabled = false;
-  bool isDivider = false;
+  bool isVisible = false;
   final _textEditingController = TextEditingController();
 
   String? getAnimation(icon) {
@@ -148,7 +149,7 @@ class _TopPageState extends State<TopPage> {
                                   () {
                                 setState(() {
                                   isButtonEnabled = false;
-                                  isDivider = true;
+                                  isVisible = true;
                                 });
                               });
                               setState(() {});
@@ -175,7 +176,7 @@ class _TopPageState extends State<TopPage> {
                   style: const TextStyle(fontSize: 30),
                 ),
                 const SizedBox(height: 20),
-                isDivider
+                isVisible
                     ? Text(
                         '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
                         style: const TextStyle(fontSize: 60),
@@ -206,11 +207,11 @@ class _TopPageState extends State<TopPage> {
                   children: [
                     Padding(
                         padding: const EdgeInsets.only(right: 10.0),
-                        child: isDivider
+                        child: isVisible
                             ? Text(
                                 '最高気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMax}°')
                             : Container()),
-                    isDivider
+                    isVisible
                         ? Text(
                             '最低気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMin}°')
                         : Container(),
@@ -222,26 +223,26 @@ class _TopPageState extends State<TopPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0),
-                      child: isDivider
+                      child: isVisible
                           ? Text(
                               '湿度: ${currentWeather == null ? 'ー' : currentWeather!.humidity}°')
                           : Container(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0),
-                      child: isDivider
+                      child: isVisible
                           ? Text(
                               '気圧: ${currentWeather == null ? 'ー' : currentWeather!.hpa} hPa')
                           : Container(),
                     ),
-                    isDivider
+                    isVisible
                         ? Text(
                             '風速: ${currentWeather == null ? 'ー' : currentWeather!.wind} kt')
                         : Container(),
                   ],
                 ),
                 const SizedBox(height: 90),
-                isDivider
+                isVisible
                     ? const Divider(
                         thickness: 1,
                         color: Colors.blue,
@@ -277,7 +278,22 @@ class _TopPageState extends State<TopPage> {
                           }).toList(),
                         ),
                 ),
-                isDivider
+                isVisible
+                    ? Container()
+                    : Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text('あなたが郵便番号を入力\nするのを待っています...'),
+                            SizedBox(width: 20),
+                            SpinKitPouringHourGlass(
+                              color: Colors.yellow,
+                              size: 30,
+                            ),
+                          ],
+                        ),
+                      ),
+                isVisible
                     ? const Divider(
                         thickness: 1,
                         color: Colors.blue,
