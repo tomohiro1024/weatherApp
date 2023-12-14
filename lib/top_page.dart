@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/weather.dart';
 import 'package:weather_app/zip_code.dart';
 
@@ -17,11 +18,24 @@ class _TopPageState extends State<TopPage> {
   Weather? currentWeather;
   String? address = '';
   String? errorMessage;
+  String? prefsAddress;
   Image? image;
   List<Weather>? hourlyWeather;
   bool isButtonEnabled = false;
   bool isVisible = false;
   final _textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future(() async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      setState(() {
+        prefsAddress = prefs.getString('address') ?? '';
+      });
+    });
+  }
 
   String? getAnimation(icon) {
     if (icon == '01d' || icon == '01n') {
@@ -111,6 +125,8 @@ class _TopPageState extends State<TopPage> {
                           ? null
                           : () async {
                               FocusManager.instance.primaryFocus?.unfocus();
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
                               setState(() {
                                 isButtonEnabled = true;
                               });
@@ -130,6 +146,11 @@ class _TopPageState extends State<TopPage> {
                               }
                               if (response.containsKey('address')) {
                                 address = response['address'];
+                                prefs.setString('address', address!);
+                                setState(() {
+                                  prefsAddress =
+                                      prefs.getString('address') ?? '';
+                                });
                                 currentWeather =
                                     (await Weather.getCurrentWeather(
                                         _textEditingController.text))!;
@@ -170,7 +191,17 @@ class _TopPageState extends State<TopPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 70),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    const SizedBox(width: 35),
+                    const Text('前回取得した住所:', style: TextStyle(fontSize: 10)),
+                    const SizedBox(width: 5),
+                    Text('$prefsAddress', style: const TextStyle(fontSize: 10)),
+                  ],
+                ),
+
+                const SizedBox(height: 60),
                 Text(
                   address!,
                   style: const TextStyle(fontSize: 30),
