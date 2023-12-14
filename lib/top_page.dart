@@ -27,7 +27,6 @@ class _TopPageState extends State<TopPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future(() async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -178,7 +177,10 @@ class _TopPageState extends State<TopPage> {
                       child: const Text(
                         '天気取得',
                         style: TextStyle(
-                            color: Colors.cyan, fontWeight: FontWeight.bold),
+                          color: Colors.cyan,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -195,9 +197,23 @@ class _TopPageState extends State<TopPage> {
                 Row(
                   children: [
                     const SizedBox(width: 35),
-                    const Text('前回取得した住所:', style: TextStyle(fontSize: 10)),
+                    const Opacity(
+                      opacity: 0.8,
+                      child: Text('前回取得した住所:',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontStyle: FontStyle.italic,
+                          )),
+                    ),
                     const SizedBox(width: 5),
-                    Text('$prefsAddress', style: const TextStyle(fontSize: 10)),
+                    Opacity(
+                      opacity: 0.8,
+                      child: Text('$prefsAddress',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontStyle: FontStyle.italic,
+                          )),
+                    ),
                   ],
                 ),
 
@@ -315,7 +331,12 @@ class _TopPageState extends State<TopPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            Text('あなたが郵便番号を入力\nするのを待っています...'),
+                            Text(
+                              'あなたが郵便番号を入力\nするのを待っています...',
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             SizedBox(width: 20),
                             SpinKitPouringHourGlass(
                               color: Colors.yellow,
