@@ -216,35 +216,29 @@ class _TopPageState extends State<TopPage> {
                     ),
                   ],
                 ),
-
-                const SizedBox(height: 60),
-                Text(
-                  address!,
-                  style: const TextStyle(fontSize: 30),
-                ),
                 const SizedBox(height: 20),
-                isVisible
-                    ? Text(
-                        '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
-                        style: const TextStyle(fontSize: 60),
-                      )
-                    : Container(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      address!,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(width: 10),
+                    isVisible
+                        ? Text(
+                            '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
+                            style: const TextStyle(fontSize: 25),
+                          )
+                        : Container(),
+                  ],
+                ),
                 const SizedBox(height: 10),
-
-                // hourlyWeather == null
-                //     ? Container()
-                //     : Image.network(
-                //         'https://openweathermap.org/img/wn/${hourlyWeather![0].icon}.png',
-                //         errorBuilder: (BuildContext? context,
-                //             Object? exception, StackTrace? stackTrace) {
-                //           return const Text('Your error widget...');
-                //         },
-                //         width: 50,
-                //       ),
                 currentWeather == null
                     ? Container()
                     : SizedBox(
-                        height: 50,
+                        height: 150,
                         child: Lottie.asset(
                             '${getAnimation(hourlyWeather![0].icon)}'),
                       ),
@@ -288,7 +282,7 @@ class _TopPageState extends State<TopPage> {
                         : Container(),
                   ],
                 ),
-                const SizedBox(height: 90),
+                const SizedBox(height: 50),
                 isVisible
                     ? const Divider(
                         thickness: 1,
