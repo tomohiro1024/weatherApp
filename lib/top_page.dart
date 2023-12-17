@@ -223,13 +223,19 @@ class _TopPageState extends State<TopPage> {
                     Text(
                       address!,
                       style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w600),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     isVisible
                         ? Text(
                             '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
-                            style: const TextStyle(fontSize: 25),
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontStyle: FontStyle.italic,
+                            ),
                           )
                         : Container(),
                   ],
@@ -238,7 +244,7 @@ class _TopPageState extends State<TopPage> {
                 currentWeather == null
                     ? Container()
                     : SizedBox(
-                        height: 150,
+                        height: 250,
                         child: Lottie.asset(
                             '${getAnimation(hourlyWeather![0].icon)}'),
                       ),
@@ -246,43 +252,97 @@ class _TopPageState extends State<TopPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: isVisible
-                            ? Text(
-                                '最高気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMax}°')
-                            : Container()),
-                    isVisible
-                        ? Text(
-                            '最低気温: ${currentWeather == null ? 'ー' : currentWeather!.tempMin}°')
-                        : Container(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          isVisible
+                              ? const Icon(
+                                  Icons.local_fire_department,
+                                  size: 40,
+                                  color: Colors.redAccent,
+                                )
+                              : Container(),
+                          const SizedBox(height: 5),
+                          isVisible
+                              ? Text(
+                                  '最高 ${currentWeather == null ? 'ー' : currentWeather!.tempMax}°',
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          isVisible
+                              ? const Icon(
+                                  Icons.ac_unit,
+                                  size: 40,
+                                  color: Colors.cyanAccent,
+                                )
+                              : Container(),
+                          const SizedBox(height: 5),
+                          isVisible
+                              ? Text(
+                                  '最低 ${currentWeather == null ? 'ー' : currentWeather!.tempMin}°',
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          isVisible
+                              ? const Icon(
+                                  Icons.water_drop,
+                                  size: 40,
+                                  color: Colors.blueAccent,
+                                )
+                              : Container(),
+                          const SizedBox(height: 5),
+                          isVisible
+                              ? Text(
+                                  '湿度 ${currentWeather == null ? 'ー' : currentWeather!.humidity}°',
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          isVisible
+                              ? const Icon(
+                                  Icons.wind_power,
+                                  size: 40,
+                                  color: Colors.white70,
+                                )
+                              : Container(),
+                          const SizedBox(height: 5),
+                          isVisible
+                              ? Text(
+                                  '風速 ${currentWeather == null ? 'ー' : currentWeather!.wind} kt',
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: isVisible
-                          ? Text(
-                              '湿度: ${currentWeather == null ? 'ー' : currentWeather!.humidity}°')
-                          : Container(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: isVisible
-                          ? Text(
-                              '気圧: ${currentWeather == null ? 'ー' : currentWeather!.hpa} hPa')
-                          : Container(),
-                    ),
-                    isVisible
-                        ? Text(
-                            '風速: ${currentWeather == null ? 'ー' : currentWeather!.wind} kt')
-                        : Container(),
-                  ],
-                ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 isVisible
                     ? const Divider(
                         thickness: 1,
@@ -301,7 +361,11 @@ class _TopPageState extends State<TopPage> {
                               child: Column(
                                 children: [
                                   Text(
-                                      '${DateFormat('H').format(weather.time)}時'),
+                                    '${DateFormat('H').format(weather.time)}時',
+                                    style: const TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
                                   Image.network(
                                     'https://openweathermap.org/img/wn/${weather.icon}.png',
                                     width: 40,
@@ -310,7 +374,10 @@ class _TopPageState extends State<TopPage> {
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Text(
                                       '${weather.temp}°',
-                                      style: const TextStyle(fontSize: 19),
+                                      style: const TextStyle(
+                                        fontSize: 19,
+                                        fontStyle: FontStyle.italic,
+                                      ),
                                     ),
                                   ),
                                 ],

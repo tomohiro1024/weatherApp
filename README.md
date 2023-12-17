@@ -23,6 +23,12 @@ open build/app/outputs/bundle
 
 
 
+### iosリリースビルドに失敗した場合
+
+https://qiita.com/kokogento/items/fb4f62393ae1e3a76b06
+
+
+
 
 
 
