@@ -23,6 +23,7 @@ class _TopPageState extends State<TopPage> {
   List<Weather>? hourlyWeather;
   bool isButtonEnabled = false;
   bool isVisible = false;
+  bool isApi = false;
   final _textEditingController = TextEditingController();
 
   @override
@@ -144,6 +145,7 @@ class _TopPageState extends State<TopPage> {
                                     .showSnackBar(snackBar);
                               }
                               if (response.containsKey('address')) {
+                                isApi = true;
                                 address = response['address'];
                                 prefs.setString('address', address!);
                                 setState(() {
@@ -169,7 +171,11 @@ class _TopPageState extends State<TopPage> {
                                   () {
                                 setState(() {
                                   isButtonEnabled = false;
-                                  isVisible = true;
+                                  if (errorMessage != null && isApi == false) {
+                                    isVisible = false;
+                                  } else {
+                                    isVisible = true;
+                                  }
                                 });
                               });
                               setState(() {});
