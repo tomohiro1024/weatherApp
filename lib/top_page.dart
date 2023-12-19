@@ -337,7 +337,7 @@ class _TopPageState extends State<TopPage> {
                           const SizedBox(height: 5),
                           isVisible
                               ? Text(
-                                  '風速 ${currentWeather == null ? 'ー' : currentWeather!.wind} kt',
+                                  '風速 ${currentWeather == null ? 'ー' : currentWeather!.wind} m/s',
                                   style: const TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),
