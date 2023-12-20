@@ -95,7 +95,21 @@ class _TopPageState extends State<TopPage> {
           child: SafeArea(
             child: Column(
               children: [
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Opacity(
+                      opacity: 0.7,
+                      child: Text('version: 1.2.2',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontStyle: FontStyle.italic,
+                          )),
+                    ),
+                    SizedBox(width: 10),
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -222,7 +236,7 @@ class _TopPageState extends State<TopPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -246,7 +260,7 @@ class _TopPageState extends State<TopPage> {
                         : Container(),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 currentWeather == null
                     ? Container()
                     : SizedBox(
