@@ -169,9 +169,9 @@ class _TopPageState extends State<TopPage> {
                                 currentWeather =
                                     (await Weather.getCurrentWeather(
                                         _textEditingController.text))!;
-                                        print('currentWeathercurrentWeather2222');
+                                print('currentWeathercurrentWeather2222');
 
-                                        print(currentWeather!.icon);
+                                print(currentWeather!.icon);
                                 if (currentWeather!.temp < 15) {
                                   const snackBar = SnackBar(
                                     backgroundColor: Colors.blueAccent,
@@ -183,9 +183,6 @@ class _TopPageState extends State<TopPage> {
 
                                 hourlyWeather = await Weather.getForecast(
                                     currentWeather!.lon, currentWeather!.lat);
-                                print('hourlyWeatherhourlyWeather');
-
-                                print(hourlyWeather?[0].icon);
                               }
                               await Future.delayed(const Duration(seconds: 2),
                                   () {
