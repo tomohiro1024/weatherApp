@@ -46,7 +46,7 @@ class _TopPageState extends State<TopPage> {
         icon == '04d' ||
         icon == '03n' ||
         icon == '04n') {
-      return 'assets/clouds.json';
+      return 'assets/images/sunny.png';
     } else if (icon == '09d' ||
         icon == '10d' ||
         icon == '09n' ||
@@ -58,6 +58,57 @@ class _TopPageState extends State<TopPage> {
       return 'assets/snow.json';
     }
     return 'assets/sunny.json';
+  }
+
+  Icon? getWeatherIcon(icon) {
+    if (icon == '01d' || icon == '01n') {
+      return const Icon(
+        Icons.sunny,
+        size: 200,
+        color: Colors.redAccent,
+      );
+    } else if (icon == '02d' || icon == '02n') {
+      return const Icon(
+        Icons.sunny,
+        size: 200,
+        color: Colors.redAccent,
+      );
+    } else if (icon == '03d' ||
+        icon == '04d' ||
+        icon == '03n' ||
+        icon == '04n') {
+      return const Icon(
+        Icons.sunny,
+        size: 200,
+        color: Colors.redAccent,
+      );
+    } else if (icon == '09d' ||
+        icon == '10d' ||
+        icon == '09n' ||
+        icon == '10n') {
+      return const Icon(
+        Icons.sunny,
+        size: 200,
+        color: Colors.redAccent,
+      );
+    } else if (icon == '11d' || icon == '11n') {
+      return const Icon(
+        Icons.sunny,
+        size: 200,
+        color: Colors.redAccent,
+      );
+    } else if (icon == '13d' || icon == '13n') {
+      return const Icon(
+        Icons.sunny,
+        size: 200,
+        color: Colors.redAccent,
+      );
+    }
+    return const Icon(
+      Icons.sunny,
+      size: 200,
+      color: Colors.redAccent,
+    );
   }
 
   Widget colorContainer() {
@@ -264,13 +315,11 @@ class _TopPageState extends State<TopPage> {
                   ],
                 ),
                 const SizedBox(height: 5),
-                // currentWeather == null
-                //     ? Container()
-                //     : SizedBox(
-                //         height: 250,
-                //         child: Lottie.asset(
-                //             '${getAnimation(hourlyWeather![0].icon)}'),
-                //       ),
+                currentWeather == null
+                    ? Container()
+                    : SizedBox(
+                        height: 250,
+                        child: getWeatherIcon(currentWeather!.icon)),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
