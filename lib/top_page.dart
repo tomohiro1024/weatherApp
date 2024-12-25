@@ -120,11 +120,10 @@ class _TopPageState extends State<TopPage> {
             height: size.height,
             width: size.width,
             decoration: const BoxDecoration(
-              color: Colors.orangeAccent,
               gradient: LinearGradient(
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
-                colors: <Color>[
+                colors: [
                   Colors.cyanAccent,
                   Colors.cyan,
                   Colors.blueAccent,
