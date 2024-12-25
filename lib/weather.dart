@@ -64,7 +64,8 @@ class Weather {
         date['main']['pressure'],
         date['wind']['speed'].toInt(),
       );
-      print(currentWeather.wind);
+      print('currentWeathercurrentWeather');
+      print(currentWeather.icon);
       return currentWeather;
     } catch (e) {
       print(e);
@@ -73,14 +74,18 @@ class Weather {
   }
 
   static Future<List<Weather>?> getForecast(double lon, double lat) async {
+    print('getForecastgetForecast');
     Map<String, List<Weather>> response = {};
     String url =
-        'https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=minutely&appid=20dabda8e9b77ce7502ea5882318bea2&lang=ja&units=metric';
+        'https://api.openweathermap.org/data/3.0/onecall?lat=$lat&lon=$lon&exclude=minutely&appid=20dabda8e9b77ce7502ea5882318bea2&lang=ja&units=metric';
     try {
       // urlの取得
       var result = await get(Uri.parse(url));
+      print('resultresult');
+      print(result.body);
       Map<String, dynamic> date = jsonDecode(result.body);
       List<dynamic> hourlyWeatherDate = date['hourly'];
+      print('hourlyWeatherDate1111');
       print(hourlyWeatherDate);
       // hourlyWeatherDateに入っている1時間ごとのデータをList<Weather>に格納
       List<Weather> hourlyWeather = hourlyWeatherDate.map((weather) {
@@ -98,6 +103,7 @@ class Weather {
             1,
             1);
       }).toList();
+      print('12313123131231');
       print(hourlyWeather[1].time);
       print(hourlyWeather[1].temp);
       print(hourlyWeather[1].icon);
