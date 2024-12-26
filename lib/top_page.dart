@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/weather.dart';
 import 'package:weather_app/zip_code.dart';
@@ -61,6 +60,17 @@ class _TopPageState extends State<TopPage> {
   }
 
   Icon? getWeatherIcon(icon) {
+    const defaultIcon = Icon(
+      Icons.sunny,
+      size: 200,
+      color: Colors.redAccent,
+    );
+
+    const sunnyIcon = Icon(
+      Icons.sunny,
+      size: 200,
+      color: Colors.redAccent,
+    );
     if (icon == '01d' || icon == '01n') {
       return const Icon(
         Icons.sunny,
@@ -111,27 +121,49 @@ class _TopPageState extends State<TopPage> {
     );
   }
 
-  Widget colorContainer() {
+  List<Color> backgroundColor(icon) {
+    if (icon == '01d' || icon == '01n') {
+      return [
+        Colors.red,
+        Colors.cyan,
+        Colors.blueAccent,
+      ];
+    }
+
+    if (icon == null) {
+      [
+        Colors.cyanAccent,
+        Colors.cyan,
+        Colors.blueAccent,
+      ];
+    }
+
+    return [
+      Colors.cyanAccent,
+      Colors.cyan,
+      Colors.blueAccent,
+    ];
+  }
+
+  Widget colorContainer(icon) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: size.height,
-            width: size.width,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
-                colors: [
-                  Colors.cyanAccent,
-                  Colors.cyan,
-                  Colors.blueAccent,
-                ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: size.height,
+              width: size.width,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: backgroundColor(icon),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -140,7 +172,7 @@ class _TopPageState extends State<TopPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        colorContainer(),
+        colorContainer(currentWeather?.icon),
         SingleChildScrollView(
           child: SafeArea(
             child: Column(
@@ -210,7 +242,7 @@ class _TopPageState extends State<TopPage> {
                               }
                               if (response.containsKey('address')) {
                                 isApi = true;
-                                address = response['address'];
+                                
                                 prefs.setString('address', address!);
                                 setState(() {
                                   prefsAddress =
@@ -222,14 +254,6 @@ class _TopPageState extends State<TopPage> {
                                 print('currentWeathercurrentWeather2222');
 
                                 print(currentWeather!.icon);
-                                if (currentWeather!.temp < 15) {
-                                  const snackBar = SnackBar(
-                                    backgroundColor: Colors.blueAccent,
-                                    content: Text('今日も寒いので気を付けましょう'),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                }
 
                                 hourlyWeather = await Weather.getForecast(
                                     currentWeather!.lon, currentWeather!.lat);
@@ -245,6 +269,15 @@ class _TopPageState extends State<TopPage> {
                                   }
                                 });
                               });
+                              address = response['address'];
+                              if (currentWeather!.temp < 15) {
+                                const snackBar = SnackBar(
+                                  backgroundColor: Colors.blueAccent,
+                                  content: Text('今日も寒いので風邪には気を付けましょう'),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                               setState(() {});
                             },
                       child: const Text(
@@ -414,49 +447,49 @@ class _TopPageState extends State<TopPage> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                isVisible
-                    ? const Divider(
-                        thickness: 1,
-                        color: Colors.blue,
-                      )
-                    : Container(),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: hourlyWeather == null
-                      ? Container()
-                      : Row(
-                          children: hourlyWeather!.map((weather) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 9, vertical: 8),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    '${DateFormat('H').format(weather.time)}時',
-                                    style: const TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                                  ),
-                                  Image.network(
-                                    'https://openweathermap.org/img/wn/${weather.icon}.png',
-                                    width: 40,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(
-                                      '${weather.temp}°',
-                                      style: const TextStyle(
-                                        fontSize: 19,
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                ),
+                // isVisible
+                //     ? const Divider(
+                //         thickness: 1,
+                //         color: Colors.blue,
+                //       )
+                //     : Container(),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: hourlyWeather == null
+                //       ? Container()
+                //       : Row(
+                //           children: hourlyWeather!.map((weather) {
+                //             return Padding(
+                //               padding: const EdgeInsets.symmetric(
+                //                   horizontal: 9, vertical: 8),
+                //               child: Column(
+                //                 children: [
+                //                   Text(
+                //                     '${DateFormat('H').format(weather.time)}時',
+                //                     style: const TextStyle(
+                //                       fontStyle: FontStyle.italic,
+                //                     ),
+                //                   ),
+                //                   Image.network(
+                //                     'https://openweathermap.org/img/wn/${weather.icon}.png',
+                //                     width: 40,
+                //                   ),
+                //                   Padding(
+                //                     padding: const EdgeInsets.only(top: 8.0),
+                //                     child: Text(
+                //                       '${weather.temp}°',
+                //                       style: const TextStyle(
+                //                         fontSize: 19,
+                //                         fontStyle: FontStyle.italic,
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ],
+                //               ),
+                //             );
+                //           }).toList(),
+                //         ),
+                // ),
                 isVisible
                     ? Container()
                     : Center(
@@ -477,12 +510,12 @@ class _TopPageState extends State<TopPage> {
                           ],
                         ),
                       ),
-                isVisible
-                    ? const Divider(
-                        thickness: 1,
-                        color: Colors.blue,
-                      )
-                    : Container(),
+                // isVisible
+                //     ? const Divider(
+                //         thickness: 1,
+                //         color: Colors.blue,
+                //       )
+                //     : Container(),
               ],
             ),
           ),
