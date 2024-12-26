@@ -11,6 +11,13 @@
 ・郵便番号の検索履歴を表示する(DB)
 
 
+メモ2
+
+・天気ごとにアイコンを表示させる
+・最高気温などに変更する
+・風速が取得できていないようにみえるので調査
+
+
 ### Androidリリース
 
 keytool -genkey -v -keystore ./key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key -storetype JKS
