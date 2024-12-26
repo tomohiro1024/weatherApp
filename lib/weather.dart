@@ -47,7 +47,7 @@ class Weather {
       // urlの取得
       var result = await get(Uri.parse(url));
       Map<String, dynamic> date = jsonDecode(result.body);
-       
+
       Weather currentWeather = Weather(
         date['main']['temp'].toInt(),
         date['main']['temp_max'].toInt(),
@@ -62,7 +62,7 @@ class Weather {
         date['main']['pressure'],
         date['wind']['speed'].toInt(),
       );
-     
+
       return currentWeather;
     } catch (e) {
       print(e);
