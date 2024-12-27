@@ -242,7 +242,7 @@ class _TopPageState extends State<TopPage> {
                               }
                               if (response.containsKey('address')) {
                                 isApi = true;
-                                
+
                                 prefs.setString('address', address!);
                                 setState(() {
                                   prefsAddress =
@@ -368,10 +368,23 @@ class _TopPageState extends State<TopPage> {
                               : Container(),
                           const SizedBox(height: 5),
                           isVisible
-                              ? Text(
-                                  '最高 ${currentWeather == null ? 'ー' : currentWeather!.tempMax}°',
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
+                              ? RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                    ),
+                                    children: [
+                                      const TextSpan(text: '最高気温 '),
+                                      TextSpan(
+                                        text: currentWeather == null
+                                            ? 'ー'
+                                            : '${currentWeather!.tempMax}°',
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )
                               : Container(),
@@ -390,10 +403,23 @@ class _TopPageState extends State<TopPage> {
                               : Container(),
                           const SizedBox(height: 5),
                           isVisible
-                              ? Text(
-                                  '最低 ${currentWeather == null ? 'ー' : currentWeather!.tempMin}°',
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
+                              ? RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                    ),
+                                    children: [
+                                      const TextSpan(text: '最低気温 '),
+                                      TextSpan(
+                                        text: currentWeather == null
+                                            ? 'ー'
+                                            : '${currentWeather!.tempMin}°',
+                                        style: const TextStyle(
+                                          color: Colors.blueAccent,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )
                               : Container(),
@@ -412,10 +438,23 @@ class _TopPageState extends State<TopPage> {
                               : Container(),
                           const SizedBox(height: 5),
                           isVisible
-                              ? Text(
-                                  '湿度 ${currentWeather == null ? 'ー' : currentWeather!.humidity}°',
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
+                              ? RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                    ),
+                                    children: [
+                                      const TextSpan(text: '湿度 '),
+                                      TextSpan(
+                                        text: currentWeather == null
+                                            ? 'ー'
+                                            : '${currentWeather!.humidity}°',
+                                        style: const TextStyle(
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )
                               : Container(),
@@ -434,10 +473,23 @@ class _TopPageState extends State<TopPage> {
                               : Container(),
                           const SizedBox(height: 5),
                           isVisible
-                              ? Text(
-                                  '風速 ${currentWeather == null ? 'ー' : currentWeather!.wind} m/s',
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
+                              ? RichText(
+                                  text: TextSpan(
+                                    style: const TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.black,
+                                    ),
+                                    children: [
+                                      const TextSpan(text: '風速 '),
+                                      TextSpan(
+                                        text: currentWeather == null
+                                            ? 'ー'
+                                            : '${currentWeather!.wind} m/s',
+                                        style: const TextStyle(
+                                          color: Colors.greenAccent,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )
                               : Container(),
