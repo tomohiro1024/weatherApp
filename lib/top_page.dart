@@ -233,6 +233,7 @@ class _TopPageState extends State<TopPage> {
 
                               errorMessage = response['message'];
                               if (errorMessage != null) {
+                                address = '';
                                 final snackBar = SnackBar(
                                   backgroundColor: Colors.red,
                                   content: Text(errorMessage!),
@@ -254,6 +255,8 @@ class _TopPageState extends State<TopPage> {
                                 print('currentWeathercurrentWeather2222');
 
                                 print(currentWeather!.icon);
+                                
+                                address = response['address'];
 
                                 hourlyWeather = await Weather.getForecast(
                                     currentWeather!.lon, currentWeather!.lat);
@@ -269,15 +272,16 @@ class _TopPageState extends State<TopPage> {
                                   }
                                 });
                               });
-                              address = response['address'];
+
                               if (currentWeather!.temp < 15) {
-                                const snackBar = SnackBar(
-                                  backgroundColor: Colors.blueAccent,
-                                  content: Text('今日も寒いので風邪には気を付けましょう'),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              }
+                                  const snackBar = SnackBar(
+                                    backgroundColor: Colors.blueAccent,
+                                    content: Text('今日も寒いので風邪には気を付けましょう'),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                }
+
                               setState(() {});
                             },
                       child: const Text(
