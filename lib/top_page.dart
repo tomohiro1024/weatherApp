@@ -17,7 +17,7 @@ class _TopPageState extends State<TopPage> {
   Weather? currentWeather;
   String? address = '';
   String? errorMessage;
-  String? prefsAddress;
+  String? prefAddress;
   Image? image;
   List<Weather>? hourlyWeather;
   bool isButtonEnabled = false;
@@ -29,9 +29,9 @@ class _TopPageState extends State<TopPage> {
   void initState() {
     super.initState();
     Future(() async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       setState(() {
-        prefsAddress = prefs.getString('address') ?? '';
+        prefAddress = sharedPreferences.getString('address') ?? '';
       });
     });
   }
@@ -221,7 +221,7 @@ class _TopPageState extends State<TopPage> {
                           ? null
                           : () async {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              final SharedPreferences prefs =
+                              final SharedPreferences sharedPreferences =
                                   await SharedPreferences.getInstance();
                               setState(() {
                                 isButtonEnabled = true;
@@ -244,10 +244,10 @@ class _TopPageState extends State<TopPage> {
                               if (response.containsKey('address')) {
                                 isApi = true;
 
-                                prefs.setString('address', address!);
+                                sharedPreferences.setString('address', address!);
                                 setState(() {
-                                  prefsAddress =
-                                      prefs.getString('address') ?? '';
+                                  prefAddress =
+                                      sharedPreferences.getString('address') ?? '';
                                 });
                                 currentWeather =
                                     (await Weather.getCurrentWeather(
@@ -318,7 +318,7 @@ class _TopPageState extends State<TopPage> {
                     const SizedBox(width: 5),
                     Opacity(
                       opacity: 0.8,
-                      child: Text('$prefsAddress',
+                      child: Text('$prefAddress',
                           style: const TextStyle(
                             fontSize: 10,
                             fontStyle: FontStyle.italic,
