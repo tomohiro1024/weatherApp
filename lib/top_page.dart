@@ -29,99 +29,74 @@ class _TopPageState extends State<TopPage> {
   void initState() {
     super.initState();
     Future(() async {
-      final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
       setState(() {
         prefAddress = sharedPreferences.getString('address') ?? '';
       });
     });
   }
 
-  String? getAnimation(icon) {
-    if (icon == '01d' || icon == '01n') {
-      return 'assets/sunny.json';
-    } else if (icon == '02d' || icon == '02n') {
-      return 'assets/fewClouds.json';
-    } else if (icon == '03d' ||
-        icon == '04d' ||
-        icon == '03n' ||
-        icon == '04n') {
-      return 'assets/images/sunny.png';
-    } else if (icon == '09d' ||
-        icon == '10d' ||
-        icon == '09n' ||
-        icon == '10n') {
-      return 'assets/rain.json';
-    } else if (icon == '11d' || icon == '11n') {
-      return 'assets/thunder.json';
-    } else if (icon == '13d' || icon == '13n') {
-      return 'assets/snow.json';
-    }
-    return 'assets/sunny.json';
-  }
-
-  Icon? getWeatherIcon(icon) {
-    const defaultIcon = Icon(
+  Icon? getWeatherIcon(String icon) {
+    const Icon sunnyIcon = Icon(
       Icons.sunny,
       size: 200,
       color: Colors.redAccent,
     );
 
-    const sunnyIcon = Icon(
-      Icons.sunny,
+    const Icon cloudIcon = Icon(
+      Icons.cloud,
       size: 200,
-      color: Colors.redAccent,
+      color: Colors.greenAccent,
     );
-    if (icon == '01d' || icon == '01n') {
-      return const Icon(
-        Icons.sunny,
-        size: 200,
-        color: Colors.redAccent,
-      );
-    } else if (icon == '02d' || icon == '02n') {
-      return const Icon(
-        Icons.sunny,
-        size: 200,
-        color: Colors.redAccent,
-      );
-    } else if (icon == '03d' ||
-        icon == '04d' ||
-        icon == '03n' ||
-        icon == '04n') {
-      return const Icon(
-        Icons.sunny,
-        size: 200,
-        color: Colors.redAccent,
-      );
-    } else if (icon == '09d' ||
-        icon == '10d' ||
-        icon == '09n' ||
-        icon == '10n') {
-      return const Icon(
-        Icons.sunny,
-        size: 200,
-        color: Colors.redAccent,
-      );
-    } else if (icon == '11d' || icon == '11n') {
-      return const Icon(
-        Icons.sunny,
-        size: 200,
-        color: Colors.redAccent,
-      );
-    } else if (icon == '13d' || icon == '13n') {
-      return const Icon(
-        Icons.sunny,
-        size: 200,
-        color: Colors.redAccent,
-      );
-    }
-    return const Icon(
-      Icons.sunny,
+
+    const Icon waterIcon = Icon(
+      Icons.water_drop,
       size: 200,
-      color: Colors.redAccent,
+      color: Colors.blue,
     );
+
+    const Icon thunderIcon = Icon(
+      Icons.thunderstorm,
+      size: 200,
+      color: Colors.greenAccent,
+    );
+
+    const Icon snowIcon = Icon(
+      Icons.cloudy_snowing,
+      size: 200,
+      color: Colors.greenAccent,
+    );
+
+    const Map<String, Icon> iconMap = {
+      '01d': sunnyIcon,
+      '01n': sunnyIcon,
+      '02d': sunnyIcon,
+      '02n': sunnyIcon,
+      '03d': cloudIcon,
+      '03n': cloudIcon,
+      '04d': cloudIcon,
+      '04n': cloudIcon,
+      '09d': waterIcon,
+      '09n': waterIcon,
+      '10d': waterIcon,
+      '10n': waterIcon,
+      '11d': thunderIcon,
+      '11n': thunderIcon,
+      '13d': snowIcon,
+      '13n': snowIcon,
+    };
+
+    return iconMap[icon] ?? sunnyIcon;
   }
 
   List<Color> backgroundColor(icon) {
+    const sunnyColor = [
+      Colors.red,
+      Colors.cyan,
+      Colors.blueAccent,
+    ];
+
     if (icon == '01d' || icon == '01n') {
       return [
         Colors.red,
@@ -145,7 +120,7 @@ class _TopPageState extends State<TopPage> {
     ];
   }
 
-  Widget colorContainer(icon) {
+  Widget colorContainer(String? icon) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -244,10 +219,12 @@ class _TopPageState extends State<TopPage> {
                               if (response.containsKey('address')) {
                                 isApi = true;
 
-                                sharedPreferences.setString('address', address!);
+                                sharedPreferences.setString(
+                                    'address', address!);
                                 setState(() {
                                   prefAddress =
-                                      sharedPreferences.getString('address') ?? '';
+                                      sharedPreferences.getString('address') ??
+                                          '';
                                 });
                                 currentWeather =
                                     (await Weather.getCurrentWeather(
@@ -255,7 +232,7 @@ class _TopPageState extends State<TopPage> {
                                 print('currentWeathercurrentWeather2222');
 
                                 print(currentWeather!.icon);
-                                
+
                                 address = response['address'];
 
                                 hourlyWeather = await Weather.getForecast(
@@ -270,17 +247,18 @@ class _TopPageState extends State<TopPage> {
                                   } else {
                                     isVisible = true;
                                   }
+                                  currentWeather;
                                 });
                               });
 
                               if (currentWeather!.temp < 15) {
-                                  const snackBar = SnackBar(
-                                    backgroundColor: Colors.blueAccent,
-                                    content: Text('今日も寒いので風邪には気を付けましょう'),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                }
+                                const snackBar = SnackBar(
+                                  backgroundColor: Colors.blueAccent,
+                                  content: Text('今日も寒いので風邪には気を付けましょう'),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
 
                               setState(() {});
                             },
@@ -385,7 +363,7 @@ class _TopPageState extends State<TopPage> {
                                             ? 'ー'
                                             : '${currentWeather!.tempMax}°',
                                         style: const TextStyle(
-                                          color: Colors.red,
+                                          color: Colors.green,
                                         ),
                                       ),
                                     ],
@@ -420,7 +398,7 @@ class _TopPageState extends State<TopPage> {
                                             ? 'ー'
                                             : '${currentWeather!.tempMin}°',
                                         style: const TextStyle(
-                                          color: Colors.blueAccent,
+                                          color: Colors.green,
                                         ),
                                       ),
                                     ],
@@ -435,7 +413,7 @@ class _TopPageState extends State<TopPage> {
                         children: [
                           isVisible
                               ? const Icon(
-                                  Icons.water_drop,
+                                  Icons.opacity,
                                   size: 40,
                                   color: Colors.blueAccent,
                                 )
@@ -455,7 +433,7 @@ class _TopPageState extends State<TopPage> {
                                             ? 'ー'
                                             : '${currentWeather!.humidity}°',
                                         style: const TextStyle(
-                                          color: Colors.blue,
+                                          color: Colors.green,
                                         ),
                                       ),
                                     ],
@@ -490,7 +468,7 @@ class _TopPageState extends State<TopPage> {
                                             ? 'ー'
                                             : '${currentWeather!.wind} m/s',
                                         style: const TextStyle(
-                                          color: Colors.greenAccent,
+                                          color: Colors.green,
                                         ),
                                       ),
                                     ],
