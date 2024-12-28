@@ -92,32 +92,55 @@ class _TopPageState extends State<TopPage> {
 
   List<Color> backgroundColor(icon) {
     const sunnyColor = [
+      Colors.yellowAccent,
+      Colors.orangeAccent,
       Colors.red,
-      Colors.cyan,
-      Colors.blueAccent,
     ];
 
-    if (icon == '01d' || icon == '01n') {
-      return [
-        Colors.red,
-        Colors.cyan,
-        Colors.blueAccent,
-      ];
-    }
-
-    if (icon == null) {
-      [
-        Colors.cyanAccent,
-        Colors.cyan,
-        Colors.blueAccent,
-      ];
-    }
-
-    return [
+    const cloudColor = [
+      Colors.white,
       Colors.cyanAccent,
       Colors.cyan,
-      Colors.blueAccent,
     ];
+
+    const rainColor = [
+      Colors.cyanAccent,
+      Colors.cyan,
+      Colors.blue,
+    ];
+
+    const thunderColor = [
+      Colors.cyanAccent,
+      Colors.cyan,
+      Colors.blue,
+    ];
+
+    const snowColor = [
+      Colors.cyanAccent,
+      Colors.cyan,
+      Colors.blue,
+    ];
+
+    const Map<String, List<Color>> weatherColor = {
+      '01d': sunnyColor,
+      '01n': sunnyColor,
+      '02d': sunnyColor,
+      '02n': sunnyColor,
+      '03d': cloudColor,
+      '03n': cloudColor,
+      '04d': cloudColor,
+      '04n': cloudColor,
+      '09d': rainColor,
+      '09n': rainColor,
+      '10d': rainColor,
+      '10n': rainColor,
+      '11d': thunderColor,
+      '11n': thunderColor,
+      '13d': snowColor,
+      '13n': snowColor,
+    };
+
+    return weatherColor[icon] ?? cloudColor;
   }
 
   Widget colorContainer(String? icon) {
@@ -321,10 +344,9 @@ class _TopPageState extends State<TopPage> {
                         ? Text(
                             '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
                             style: const TextStyle(
-                              fontSize: 45,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w500
-                            ),
+                                fontSize: 45,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w500),
                           )
                         : Container(),
                   ],
