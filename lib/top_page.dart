@@ -316,13 +316,14 @@ class _TopPageState extends State<TopPage> {
                         fontStyle: FontStyle.italic,
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 15),
                     isVisible
                         ? Text(
                             '${currentWeather == null ? 'ー' : currentWeather!.temp}°',
                             style: const TextStyle(
-                              fontSize: 25,
+                              fontSize: 45,
                               fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w500
                             ),
                           )
                         : Container(),
